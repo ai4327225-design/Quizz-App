@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Quiz Attempts - Quiz App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="quiz-attempts.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-custom">
+        <div class="container">
+            <span class="navbar-brand">Quiz App</span>
+            <div class="user-info">
+                <a href="dashboard.html" class="btn-back">
+                    <i class="bi bi-house"></i> Dashboard
+                </a>
+                <span id="welcomeUser" class="user-name"></span>
+                <button class="btn-logout " onclick="logoutUser()"><span class="me-1">Logout</span> <img
+                        src="logout.png" class="logout-img" alt=""></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="page-header">
+            <h1 class="page-title">My Quiz Attempts</h1>
+        </div>
+
+        <div class="attempts-container empty">
+            <div id="attemptsList" class="row">
+
+            </div>
+
+            <div id="emptyState" class="empty-state">
+                <div class="attempt-icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <p class="attempt-message">You haven't attempted any quizzes yet.</p>
+                <a href="dashboard.html" class="btn-browse-quizzes">
+                    <i class="fas fa-search me-2"></i>Browse Quizzes
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="quiz-attempts.js"></script>
+</body>
+
+</html>

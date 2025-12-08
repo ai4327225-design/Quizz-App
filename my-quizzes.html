@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Quizzes - Quiz App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="my-quizzes.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-custom">
+        <div class="container">
+            <span class="navbar-brand">Quiz App</span>
+            <div class="user-info">
+                <a href="dashboard.html" class="btn-back">
+                    <i class="bi bi-house"></i> Dashboard
+                </a>
+                <span id="welcomeUser" class="user-name"></span>
+                <button class="btn-logout " onclick="logoutUser()"><span class="me-1">Logout</span> <img
+                        src="logout.png" class="logout-img" alt=""></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="page-header">
+            <h1 class="page-title">My Quizzes</h1>
+        </div>
+
+        <div class="quizzes-container empty">
+            <div id="quizzesList" class="row">
+
+            </div>
+
+            <div id="emptyState" class="empty-state">
+                <div class="quiz-icon">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <p class="quiz-message">You haven't created any quizzes yet.</p>
+                <a href="create-quiz.html" class="btn-info-custom">
+                    <i class="fas fa-plus me-2"></i>Create First Quiz
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="my-quizzes.js"></script>
+
+</body>
+
+</html>

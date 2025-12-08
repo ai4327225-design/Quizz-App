@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Quiz _ Quiz App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="create-quiz.css">
+</head>
+
+<body>
+    <section>
+        <nav class="navbar navbar-custom sticky-top">
+            <div class="container-fluid">
+                <span class="navbar-brand">Quiz App</span>
+                <div class="user-info">
+                    <a href="dashboard.html" class="btn-back">
+                        <i class="bi bi-house"></i> Dashboard
+                    </a>
+                    <span id="welcomeUser" class="user-name"></span>
+                    <button class="btn-logout " onclick="logoutUser()"><span class="me-1">Logout</span> <img
+                            src="logout.png" class="logout-img" alt=""></button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mt-4">
+            <div class="page-header">
+                <h1 class="page-title">Create New Quiz</h1>
+            </div>
+
+            <div class="quiz-form-container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="quizTitle" class="form-label">Quiz Title</label>
+                        <input type="text" class="form-control" id="quizTitle" placeholder="Enter quiz title">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <label for="quizCategory" class="form-label">Category</label>
+                            <select class="form-control" id="quizCategory">
+                                <option value="">Select a category</option>
+                                <optgroup label="Science And Technology">
+                                    <option value="Physics">Physics</option>
+                                    <option value="Chemistry">Chemistry</option>
+                                    <option value="Biology">Biology</option>
+                                    <option value="Computer Science">Computer Science</option>
+                                    <option value="Artificial Intelligence">Artificial Intelligence</option>
+                                    <option value="Space Science">Space Science</option>
+                                    <option value="Engineering Basics">Engineering Basics</option>
+                                    <option value="General Science">General Science</option>
+                                </optgroup>
+                                <optgroup label="Mathematics">
+                                    <option value="Arithmetic">Arithmetic</option>
+                                    <option value="Algebra">Algebra</option>
+                                    <option value="Geometry">Geometry</option>
+                                    <option value="Calculus">Calculus</option>
+                                    <option value="Statistics">Statistics</option>
+                                    <option value="Probability">Probability</option>
+                                    <option value="Number Systems">Number Systems</option>
+                                    <option value="Trigonometry">Trigonometry</option>
+                                </optgroup>
+                                <optgroup label="Health And Lifestyle">
+                                    <option value="Nutrition">Nutrition</option>
+                                    <option value="Fitness">Fitness</option>
+                                    <option value="Mental Health">Mental Health</option>
+                                    <option value="First Aid">First Aid</option>
+                                    <option value="Healthy Habits">Healthy Habits</option>
+                                    <option value="Human Body Basics">Human Body Basics</option>
+                                    <option value="Diseases And Prevention">Diseases And Prevention</option>
+                                </optgroup>
+                                <optgroup label="History And Culture">
+                                    <option value="World History">World History</option>
+                                    <option value="Ancient Civilizations">Ancient Civilizations</option>
+                                    <option value="Wars And Revolutions">Wars And Revolutions</option>
+                                    <option value="Historical Figures">Historical Figures</option>
+                                    <option value="Arts And Culture">Arts And Culture</option>
+                                    <option value="Traditions And Customs">Traditions And Customs</option>
+                                    <option value="Geography And Civilizations">Geography And Civilizations</option>
+                                </optgroup>
+                                <optgroup label="Language And Literature">
+                                    <option value="English Grammar">English Grammar</option>
+                                    <option value="Vocabulary">Vocabulary</option>
+                                    <option value="Reading Comprehension">Reading Comprehension</option>
+                                    <option value="Poetry">Poetry</option>
+                                    <option value="Famous Authors">Famous Authors</option>
+                                    <option value="Linguistics">Linguistics</option>
+                                    <option value="Idioms And Phrases">Idioms And Phrases</option>
+                                </optgroup>
+                                <optgroup label="Business And Finance">
+                                    <option value="Entrepreneurship">Entrepreneurship</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Economics">Economics</option>
+                                    <option value="Accounting Basics">Accounting Basics</option>
+                                    <option value="Personal Finance">Personal Finance</option>
+                                    <option value="Startups">Startups</option>
+                                    <option value="E-commerce">E-commerce</option>
+                                </optgroup>
+                                <optgroup label="General Knowledge">
+                                    <option value="Current Affairs">Current Affairs</option>
+                                    <option value="Countries And Capitals">Countries And Capitals</option>
+                                    <option value="World Organizations">World Organizations</option>
+                                    <option value="Important Inventions">Important Inventions</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Famous Personalities">Famous Personalities</option>
+                                    <option value="Environment And Ecology">Environment And Ecology</option>
+                                </optgroup>
+                                <optgroup label="Entertainment And Media">
+                                    <option value="Movies">Movies</option>
+                                    <option value="Music">Music</option>
+                                    <option value="TV Shows">TV Shows</option>
+                                    <option value="Celebrities">Celebrities</option>
+                                    <option value="Pop Culture">Pop Culture</option>
+                                    <option value="Animation">Animation</option>
+                                    <option value="Gaming">Gaming</option>
+                                </optgroup>
+                                <optgroup label="Exam And Career Prep">
+                                    <option value="IQ Tests">IQ Tests</option>
+                                    <option value="Aptitude">Aptitude</option>
+                                    <option value="Logical Reasoning">Logical Reasoning</option>
+                                    <option value="Verbal Ability">Verbal Ability</option>
+                                    <option value="Interview Preparation">Interview Preparation</option>
+                                    <option value="Professional Skills">Professional Skills</option>
+                                    <option value="Job Readiness">Job Readiness</option>
+                                </optgroup>
+                                <optgroup label="Arts And Creativity">
+                                    <option value="Drawing Basics">Drawing Basics</option>
+                                    <option value="Photography">Photography</option>
+                                    <option value="Film Making">Film Making</option>
+                                    <option value="Graphic Design">Graphic Design</option>
+                                    <option value="Interior Design">Interior Design</option>
+                                    <option value="Crafts And DIY">Crafts And DIY</option>
+                                </optgroup>
+                                <optgroup label="Nature And Environment">
+                                    <option value="Wildlife">Wildlife</option>
+                                    <option value="Forests">Forests</option>
+                                    <option value="Climate Change">Climate Change</option>
+                                    <option value="Oceans And Rivers">Oceans And Rivers</option>
+                                    <option value="Environmental Protection">Environmental Protection</option>
+                                    <option value="Plants And Trees">Plants And Trees</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="quizDescription" class="form-label">Description</label>
+                    <textarea class="form-control" id="quizDescription" rows="3"
+                        placeholder="Enter quiz description"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <a href="dashboard.html" class="btn-cancel">Cancel</a>
+                    <button class="btn-create" onclick="saveQuiz()">Create Quiz</button>
+                </div>
+            </div>
+
+            <div class="markdown-section" id="markdownSection">
+                <textarea class="form-control markdown-textarea" id="markdownInput" placeholder="Question 1: What is the capital of France?
+Time Limit: 60
+Options:
+- Paris [Correct]
+- London
+- Berlin
+- Madrid
+
+Question 2: What is 2+2?
+Time Limit: 30
+Options:
+- 3
+- 4 [Correct]
+- 5
+- 6"></textarea>
+
+                <div class="markdown-actions">
+                    <button class="btn-markdown-cencle" onclick="hideMarkdown()">Cancel</button>
+                    <button class="btn-render" onclick="renderQuestions()">Render Quiz</button>
+                </div>
+            </div>
+
+
+            <div class="questions-section" id="questionsSection">
+                <div class="section-header">
+                    <h2 class="section-title">Questions</h2>
+                    <div class="questions-section-button">
+                        <button class="btn-add-question" onclick="showMarkdown()">
+                            <i class="fas fa-code"></i> Markdown
+                        </button>
+                        <button class="btn-add-question" onclick="addQuestion()">
+                            <i class="fas fa-plus"></i> Add Question
+                        </button>
+                    </div>
+                </div>
+
+                <div id="questionsContainer">
+                    <div class="question-card">
+                        <div class="question-header">
+                            <span class="question-number">Question 1</span>
+                            <button class="btn-remove" onclick="deleteQuestion(this)">Remove</button>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Question Text</label>
+                            <input type="text" class="form-control question-text" placeholder="Enter question">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Time Limit (seconds)</label>
+                            <input type="number" class="form-control time-limit-input" value="60" min="5">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Options</label>
+
+                            <div class="option-item">
+                                <div class="option-actions">
+                                    <input type="radio" name="q1" checked>
+                                </div>
+                                <input type="text" class="form-control option-input" placeholder="Option 1">
+                            </div>
+
+                            <div class="option-item">
+                                <div class="option-actions">
+                                    <input type="radio" name="q1">
+                                </div>
+                                <input type="text" class="form-control option-input" placeholder="Option 2">
+                            </div>
+
+                            <div class="option-item">
+                                <div class="option-actions">
+                                    <input type="radio" name="q1">
+                                </div>
+                                <input type="text" class="form-control option-input" placeholder="Option 3">
+                            </div>
+
+                            <div class="option-item">
+                                <div class="option-actions">
+                                    <input type="radio" name="q1">
+                                </div>
+                                <input type="text" class="form-control option-input" placeholder="Option 4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="form-actions">
+                    <a href="dashboard.html" class="btn-cancel">Cancel</a>
+                    <button class="btn-create" onclick="saveQuiz()">Create Quiz</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="create-quiz.js"></script>
+
+</body>
+
+</html>
