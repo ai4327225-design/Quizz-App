@@ -273,6 +273,7 @@ body {
     color: #0a8f4f;
 }
 
+/* Media query */
 @media (max-width: 768px) {
     .quiz-header {
         flex-direction: column;
