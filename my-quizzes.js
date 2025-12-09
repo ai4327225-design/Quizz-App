@@ -54,6 +54,8 @@ function renderQuizzes() {
     quizzesList.innerHTML = myQuizzes.map((quiz, index) => {
         const allQuizzes = getQuizzes();
         const actualIndex = allQuizzes.findIndex(q => q.id === quiz.id);
+        console.log("actualIndex", actualIndex);
+        
 
         return `
         <div class="col-md-6 mb-2">
