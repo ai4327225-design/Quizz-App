@@ -1,3 +1,10 @@
+import { logoutUser, getUserInitials, generateRandomColor, initProfile, highlightCurrentPage } from './utality.js';
+window.logoutUser = logoutUser;
+getUserInitials();
+generateRandomColor();
+initProfile();
+highlightCurrentPage();
+
 let questionCount = 1;
 
 function getCurrentUser() {
@@ -16,16 +23,13 @@ function showMarkdown() {
     document.getElementById('markdownSection').style.display = 'block';
     document.getElementById('questionsSection').style.display = 'none';
 }
+window.showMarkdown = showMarkdown;
 
 function hideMarkdown() {
     document.getElementById('markdownSection').style.display = 'none';
     document.getElementById('questionsSection').style.display = 'block';
 }
-
-function logoutUser() {
-    localStorage.removeItem("loggedInUser");
-    window.location.href = "login.html"
-}
+window.hideMarkdown = hideMarkdown;
 
 function renderQuestions() {
     const markdownText = document.getElementById('markdownInput').value;
@@ -43,6 +47,7 @@ function renderQuestions() {
 
     hideMarkdown();
 }
+window.renderQuestions = renderQuestions;
 
 
 
@@ -203,10 +208,14 @@ function addQuestion() {
     document.getElementById("questionsContainer").appendChild(newQuestion);
 }
 
+window.addQuestion = addQuestion;
+
 function deleteQuestion(btn) {
     btn.parentElement.parentElement.remove();
     renumberQuestions();
 }
+
+window.deleteQuestion = deleteQuestion;
 
 function renumberQuestions() {
     const cards = document.querySelectorAll(".question-card");
@@ -220,7 +229,6 @@ function getRandomColor() {
     let color = "#" + Math.floor(Math.random() * 16777215).toString(16);
     return color || "#4361ee";
 }
-
 
 
 // Save quiz
@@ -284,7 +292,7 @@ function saveQuiz() {
         published: false,
         attempts: 0,
         createdAt: new Date().toISOString(),
-        creator: currentUser.name,
+        creatorId: currentUser.id,
         color: getRandomColor()
     };
 
@@ -302,8 +310,4 @@ function saveQuiz() {
         window.location.href = "my-quizzes.html";
     })
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-    const currentUser = getCurrentUser();
-    document.getElementById("welcomeUser").textContent = `Welcome, ${currentUser.name}`;
-});
+window.saveQuiz = saveQuiz;

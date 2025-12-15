@@ -1,3 +1,15 @@
+// import { getCurrentUser, getQuizzes, getQuizAttempts, logoutUser, getUserInitials, generateRandomColor, initProfile, calculateTotalTime, highlightCurrentPage } from './utality.js';
+// window.logoutUser = logoutUser;
+// getUserInitials();
+// generateRandomColor();
+// highlightCurrentPage();
+
+import { logoutUser, getUserInitials, generateRandomColor, initProfile, calculateTotalTime, highlightCurrentPage } from './utality.js';
+window.logoutUser = logoutUser;
+getUserInitials();
+generateRandomColor();
+highlightCurrentPage();
+
 function getCurrentUser() {
     return JSON.parse(localStorage.getItem("loggedInUser")) || { name: "Unknown User" };
 }
@@ -15,12 +27,6 @@ function getQuizById(quizId) {
     return quizzes.find(quiz => quiz.id === quizId)
 }
 
-function logoutUser() {
-    localStorage.removeItem("loggedInUser");
-    window.location.href = "login.html";
-};
-
-
 const buttons = document.querySelectorAll('.btn-back');
 const currentPage = window.location.pathname.split('/').pop();
 
@@ -30,8 +36,6 @@ buttons.forEach(btn => {
         btn.classList.add('active');
     }
 });
-
-
 
 function renderLeaderboard() {
     const leaderboardList = document.getElementById("leaderboardList");
@@ -152,9 +156,32 @@ function renderPublishedQuizzes() {
     const currentUser = getCurrentUser();
     const attempts = getQuizAttempts();
 
+    const viewerInterests = currentUser.interests || [];
+
     const visibleQuizzes = quizzes.filter(quiz => {
-        return quiz.published === true || quiz.creator === currentUser.name;
-    });
+
+        if (quiz.creatorId === currentUser.id) {
+            return true;
+        }
+
+        if (!quiz.published) {
+            return false;
+        }
+
+        if (viewerInterests.length === 0) {
+            return true;
+        }
+
+        const quizCategory = (quiz.category || "").toLowerCase();
+        const matchesViewerInterest = viewerInterests.some(interest => {
+            const viewerInterestShow = interest.toLowerCase();
+            return quizCategory.includes(viewerInterestShow) ||
+                viewerInterestShow.includes(quizCategory);
+        });
+
+        return matchesViewerInterest;
+
+    })
 
     if (visibleQuizzes.length === 0) {
         quizzesList.innerHTML = "";
@@ -169,13 +196,13 @@ function renderPublishedQuizzes() {
     container.classList.add("has-quizzes");
 
     quizzesList.innerHTML = visibleQuizzes.map((quiz) => {
-        const userAttempts = attempts.filter(attempt => 
-            attempt.quizId === quiz.id && 
+        const userAttempts = attempts.filter(attempt =>
+            attempt.quizId === quiz.id &&
             (attempt.userId === currentUser.id || attempt.userName === currentUser.name)
         );
-        
+
         const hasAttempted = userAttempts.length > 0;
-        
+
         return `
         <div class="col-md-6 mb-2">
             <div class="quiz-card" style="border-left: 4px solid ${quiz.color || '#4361ee'};">
@@ -184,14 +211,14 @@ function renderPublishedQuizzes() {
                         <h3 class="quiz-title">${quiz.title}</h3>
                         <p class="quiz-description">
                             ${quiz.description && quiz.description.trim().length > 0
-                                ? (quiz.description.length > 36 ? quiz.description.substring(0, 36) + "..." : quiz.description)
-                                : "No description"}
+                ? (quiz.description.length > 36 ? quiz.description.substring(0, 36) + "..." : quiz.description)
+                : "No description"}
                         </p>
                         <div class="quiz-category">
                             <i class="fas fa-tag"></i>
                             <span>${quiz.category || "General"}</span>
                         </div>  
-                        <p class="creator-info">Created by: ${quiz.creator || "Unknown User"}</p>
+                        <p class="creator-info">Created by: ${getUserNameById(quiz.creatorId)}</p>
                     </div>
                 </div>
                 
@@ -225,38 +252,10 @@ function renderPublishedQuizzes() {
     }).join("");
 }
 
-
-function calculateTotalTime(questions) {
-    if (!questions || questions.length === 0) {
-        return "0 sec";
-    }
-    
-    let totalSeconds = 0;
-    let questionCount = 0;
-
-    questions.forEach((question) => {
-        if (question.text && question.text.trim() !== "") {
-            const time = parseInt(question.timeLimit);
-            totalSeconds += (!isNaN(time) && time > 0) ? time : 60;
-            questionCount++;
-        }
-    });
-
-    if (questionCount === 0) {
-        return "0 sec";
-    }
-
-    if (totalSeconds < 60) {
-        return `${totalSeconds} sec`;
-    } else {
-        const minutes = Math.floor(totalSeconds / 60);
-        const seconds = totalSeconds % 60;
-        if (seconds === 0) {
-            return `${minutes} min`;
-        } else {
-            return `${minutes} min ${seconds} sec`;
-        }
-    }
+function getUserNameById(userId) {
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const user = users.find(u => u.id === userId)
+    return user ? user.name : "Unknown User";
 }
 
 
@@ -272,19 +271,17 @@ function takeQuiz(quizId) {
     localStorage.setItem("selectedQuizId", quizId);
     window.location.href = "take-quiz.html";
 }
+window.takeQuiz = takeQuiz;
 
 // View quiz and attempts
 function viewQuizAttempts(quizId) {
     localStorage.setItem("selectedQuizId", quizId);
     window.location.href = "user-quiz-attempts.html";
 }
+window.viewQuizAttempts = viewQuizAttempts;
 
 document.addEventListener("DOMContentLoaded", function () {
-    const currentUser = getCurrentUser();
-    document.getElementById("welcomeUser").textContent = `Welcome, ${currentUser.name}`;
+    initProfile();
     renderPublishedQuizzes();
     renderLeaderboard();
-
-  
 });
-

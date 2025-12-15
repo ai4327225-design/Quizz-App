@@ -1,8 +1,9 @@
-let currentQuiz = null;
-let allAttempts = [];
-let currentUser = null;
-let currentUserAttempt = null;
-let quizlist = [];
+import {logoutUser, getUserInitials, generateRandomColor, initProfile, getScoreClass, getScoreEmoji, getPerformanceText, formatDate, formatTime } from './utality.js';
+
+window.logoutUser = logoutUser;
+getUserInitials();
+generateRandomColor();
+initProfile();
 
 function getCurrentUser() {
     return JSON.parse(localStorage.getItem("loggedInUser")) || { name: "Guest" };
@@ -18,10 +19,13 @@ function getQuizzes() {
 
 quizlist = getQuizzes();
 
-function logoutUser() {
-    localStorage.removeItem("loggedInUser");
-    window.location.href = "login.html";
-}
+let currentQuiz = null;
+let allAttempts = [];
+let currentUser = null;
+let currentUserAttempt = null;
+let quizlist = [];
+
+quizlist = getQuizzes();
 
 function getSelectedQuiz() {
     const quizId = localStorage.getItem("selectedQuizId");
@@ -68,6 +72,7 @@ function takeQuiz() {
         window.location.href = 'take-quiz.html';
     }
 }
+window.takeQuiz = takeQuiz;
 
 function initializePage() {
     currentQuiz = getSelectedQuiz();
@@ -87,14 +92,14 @@ function renderCurrentUserQuizButton() {
     if (quizAttempts.length > 0) {
         if (currentUserAttempt) {
             buttonContainer.innerHTML = `
-            <button class="btn btn-retake-quiz" onclick="takeQuiz()">
+            <button class="btn-retake-quiz" onclick="takeQuiz()">
                 <i class="fas fa-redo-alt"></i> Retake Quiz
             </button>
         `;
         } else {
             buttonContainer.innerHTML = `
-            <button class="btn btn-primary" onclick="takeQuiz()">
-                <i class="fas fa-play-circle me-2"></i> Take Quiz
+            <button class="btn-take-quiz" onclick="takeQuiz()">
+                <i class="fas fa-play-circle"></i> Take Quiz
             </button>
         `;
         }
@@ -185,8 +190,8 @@ function renderLatestAttempts() {
                 </div>
                 <h4>No Attempts Yet</h4>
                 <p class="mb-3">No one has attempted this quiz yet.</p>
-                <button class="btn btn-primary" onclick="takeQuiz()">
-                   <i class="fas fa-play-circle me-2"></i> Take Quiz
+                <button class="btn-take-quiz" onclick="takeQuiz()">
+                   <i class="fas fa-play-circle"></i> Take Quiz
                 </button>
             </div>
         `;
@@ -232,60 +237,13 @@ function renderLatestAttempts() {
     }).join('');
 }
 
-function getScoreClass(percentage) {
-    if (percentage >= 80) return 'score-excellent';
-    if (percentage >= 60) return 'score-good';
-    if (percentage >= 40) return 'score-average';
-    return 'score-poor';
-}
-
 function getQuizColor(quizId) {
     const quizColor = quizlist.find((qz) => qz.id === quizId).color || "#4361ee"
     return quizColor;
 }
 
-function getScoreEmoji(percentage) {
-    if (percentage >= 80) return '<i class="fas fa-trophy score-icon excellent"></i>';
-    if (percentage >= 60) return '<i class="fas fa-thumbs-up score-icon good"></i>';
-    if (percentage >= 40) return '<i class="fas fa-meh score-icon average"></i>';
-    return '<i class="fas fa-frown score-icon poor"></i>';
-}
-
-function getPerformanceText(percentage) {
-    if (percentage >= 80) return 'Excellent!';
-    if (percentage >= 60) return 'Good Job!';
-    if (percentage >= 40) return 'Average';
-    return 'Needs Improvement';
-}
-
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-}
-
-function formatTime(seconds) {
-    if (seconds < 60) {
-        return `${seconds} seconds`;
-    } else {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = seconds % 60;
-        if (remainingSeconds === 0) {
-            return `${minutes} minutes`;
-        } else {
-            return `${minutes}m ${remainingSeconds}s`;
-        }
-    }
-}
 
 // document.addEventListener("DOMContentLoaded", initializePage);
 document.addEventListener("DOMContentLoaded", function () {
-    const currentUser = getCurrentUser();
-    document.getElementById("welcomeUser").textContent = `Welcome, ${currentUser.name}`;
     initializePage();
 })

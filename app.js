@@ -1,3 +1,5 @@
+import { generateRandomColor} from './utality.js';
+
 // Login User
 function loginUser() {
     const email = document.getElementById("loginEmail").value;
@@ -5,8 +7,10 @@ function loginUser() {
 
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
-    const user = users.find(u => u.email === email && u.password === password);
- 
+    const hashedPassword = CryptoJS.SHA256(password).toString();
+
+    const user = users.find(u => u.email === email && u.password === hashedPassword);
+
     if (!user) {
         document.getElementById("loginError").innerText = "Invalid email or password.";
         return;
@@ -15,7 +19,7 @@ function loginUser() {
     localStorage.setItem("loggedInUser", JSON.stringify(user));
     window.location.href = "dashboard.html";
 }
-
+window.loginUser = loginUser;
 
 function registerUser() {
     const name = document.getElementById("regName").value;
@@ -34,7 +38,10 @@ function registerUser() {
         return;
     }
 
-    const newUser = { name, email, password };
+    const hashedPassword = CryptoJS.SHA256(password).toString();
+     const avatarColors = generateRandomColor();
+
+    const newUser = { name, email, password: hashedPassword,avatarColors, id: Date.now().toString(), };
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
 
@@ -52,3 +59,4 @@ if (window.location.pathname.includes("dashboard.html")) {
         document.getElementById("welcomeUser").innerText = `Welcome, ${loggedInUser.name}`;
     }
 }
+window.registerUser = registerUser;

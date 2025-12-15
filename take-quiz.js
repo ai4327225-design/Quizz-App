@@ -1,3 +1,10 @@
+import {logoutUser, getUserInitials, generateRandomColor, initProfile } from './utality.js';
+window.logoutUser = logoutUser;
+getUserInitials();
+generateRandomColor();
+initProfile();
+
+
 let currentQuiz = null;
 let currentQuestionIndex = 0;
 let userAnswers = [];
@@ -16,12 +23,6 @@ function getSelectedQuiz() {
     const quizId = localStorage.getItem("selectedQuizId");
     const quizzes = JSON.parse(localStorage.getItem("quizzes")) || [];
     return quizzes.find(quiz => quiz.id === quizId);
-}
-
-
-function logoutUser() {
-    localStorage.removeItem("loggedInUser");
-    window.location.href = "login.html";
 }
 
 function addExactTime() {
@@ -82,8 +83,6 @@ function updateQuizAttemptsCount() {
 
 // Initialize quiz
 function initializeQuiz() {
-    const currentUser = getCurrentUser();
-    document.getElementById("welcomeUser").textContent = `Welcome, ${currentUser.name}`;
     currentQuiz = getSelectedQuiz();
     if (!currentQuiz) {
         alert("Quiz not found!");
@@ -176,6 +175,7 @@ function selectOption(optionIndex) {
     });
     updateUI();
 }
+window.selectOption = selectOption;
 
 function updateUI() {
     updateNavigationButtons();
@@ -210,12 +210,13 @@ function updateNavigationButtons() {
 function previousQuestion() {
     loadQuestion(currentQuestionIndex - 1);
 }
+window.previousQuestion = previousQuestion;
 
 // next
 function nextQuestion() {
     loadQuestion(currentQuestionIndex + 1);
 }
-
+window.nextQuestion = nextQuestion;
 
 // submit
 function submitQuiz() {
@@ -227,6 +228,7 @@ function submitQuiz() {
 
     window.location.href = "quiz-attempts.html";
 }
+window.submitQuiz = submitQuiz;
 
 // Calculate score
 function calculateScore() {

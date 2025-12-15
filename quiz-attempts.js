@@ -1,3 +1,11 @@
+import {logoutUser, getUserInitials, generateRandomColor, initProfile, getScoreClass, getScoreEmoji, getPerformanceText, formatDate, formatTime, highlightCurrentPage } from './utality.js';
+
+window.logoutUser = logoutUser;
+getUserInitials();
+generateRandomColor();
+initProfile();
+highlightCurrentPage();
+
 function getCurrentUser() {
     return JSON.parse(localStorage.getItem("loggedInUser")) || { name: "Guest" };
 }
@@ -10,10 +18,6 @@ function getQuizzes() {
     return JSON.parse(localStorage.getItem("quizzes")) || [];
 }
 
-function logoutUser(){
-    localStorage.removeItem("loggedInUser");
-    window.location.href="login.html"
-}
 
 function renderQuizAttempts() {
     const container = document.querySelector('.attempts-container');
@@ -114,6 +118,9 @@ function renderQuizAttempts() {
                 <button class="btn-retake-quiz" onclick="retakeQuiz('${attempt.quizId}')">
                     <i class="fas fa-redo"></i> Retake Quiz
                 </button>
+                <button class="btn-action btn-view-attempts" onclick="viewQuizAttempts('${attempt.quizId}')">
+                    <i class="fas fa-eye"></i> View Attempts
+                </button>
             </div>
         </div>    
         `;
@@ -139,57 +146,6 @@ function calculateStatistics(attempts) {
     };
 }
 
-// Date
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-}
-
-// Time from seconds
-function formatTime(seconds) {
-    if (seconds < 60) {
-        return `${seconds} seconds`;
-    } else {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = seconds % 60;
-        if (remainingSeconds === 0) {
-            return `${minutes} minutes`;
-        } else {
-            return `${minutes}m ${remainingSeconds}s`;
-        }
-    }
-}
-
-function getScoreClass(percentage) {
-    if (percentage >= 80) return 'score-excellent';
-    if (percentage >= 60) return 'score-good';
-    if (percentage >= 40) return 'score-average';
-    return 'score-poor';
-}
-
-
-function getScoreEmoji(percentage) {
-    if (percentage >= 80) return '<i class="fas fa-trophy score-icon excellent"></i>';
-    if (percentage >= 60) return '<i class="fas fa-thumbs-up score-icon good"></i>';
-    if (percentage >= 40) return '<i class="fas fa-meh score-icon average"></i>';
-    return '<i class="fas fa-frown score-icon poor"></i>';
-}
-
-
-function getPerformanceText(percentage) {
-    if (percentage >= 80) return 'Excellent!';
-    if (percentage >= 60) return 'Good Job!';
-    if (percentage >= 40) return 'Average';
-    return 'Needs Improvement';
-}
-
-
 function retakeQuiz(quizId) {
     Swal.fire({
         title: "Retake Quiz?",
@@ -207,10 +163,15 @@ function retakeQuiz(quizId) {
         }
     });
 }
+window.retakeQuiz = retakeQuiz;
 
+// View quiz and attempts
+function viewQuizAttempts(quizId) {
+    localStorage.setItem("selectedQuizId", quizId);
+    window.location.href = "user-quiz-attempts.html";
+}
+window.viewQuizAttempts = viewQuizAttempts;
 
 document.addEventListener("DOMContentLoaded", function () {
-    const currentUser = getCurrentUser();
-    document.getElementById("welcomeUser").textContent = `Welcome, ${currentUser.name}`;
     renderQuizAttempts();
 });

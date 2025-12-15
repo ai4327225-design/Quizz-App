@@ -2,6 +2,12 @@ let questionCount = 0;
 let currentQuiz = null;
 let editingQuizId = null;
 
+import { logoutUser, getUserInitials, generateRandomColor, initProfile } from './utality.js';
+window.logoutUser = logoutUser;
+getUserInitials();
+generateRandomColor();
+initProfile();
+
 function getCurrentUser() {
     return JSON.parse(localStorage.getItem("loggedInUser")) || { name: "Unknown User" };
 }
@@ -18,35 +24,70 @@ function showMarkdown() {
     document.getElementById('markdownSection').style.display = 'block';
     document.getElementById('questionsSection').style.display = 'none';
 }
+window.showMarkdown = showMarkdown;
 
 function hideMarkdown() {
     document.getElementById('markdownSection').style.display = 'none';
     document.getElementById('questionsSection').style.display = 'block';
 }
+window.hideMarkdown = hideMarkdown;
 
-function logoutUser() {
-    localStorage.removeItem("loggedInUser");
-    window.location.href = "login.html"
+function getEmptyQuestionCard() {
+    const cards = document.querySelectorAll(".question-card");
+    if (cards.length !== 1) return null;
+    const card = cards[0];
+    const text = card.querySelector(".question-text").value.trim();
+    const options = card.querySelectorAll(".option-input");
+    const allOptionsEmpty = [...options].every(option => option.value.trim() === "");
+    if (text === "" && allOptionsEmpty) {
+        return card;
+    }
+
+    return null;
 }
+
+
+function fillQuestionCard(card, data) {
+    card.querySelector(".question-text").value = data.text;
+    card.querySelector(".time-limit-input").value = data.timeLimit || 60;
+
+    const optionsContainer = card.querySelector(".mb-3:last-child");
+    optionsContainer.innerHTML = `<label class="form-label">Options</label>`;
+
+    data.options.forEach((opt, i) => {
+        const checked = i === data.correctAnswer ? "checked" : "";
+        optionsContainer.innerHTML += `
+            <div class="option-item">
+                <div class="option-actions">
+                    <input type="radio" name="q1" ${checked}>
+                </div>
+                <input type="text" class="form-control option-input" value="${opt}">
+            </div>
+        `;
+    });
+}
+
+
 
 function renderQuestions() {
     const markdownText = document.getElementById('markdownInput').value;
     const questions = parseMarkdown(markdownText);
 
-    // document.getElementById('questionsContainer').innerHTML = '';
-    // questionCount = 0;
+    const emptyCard = getEmptyQuestionCard();
+    if (emptyCard && questions.length === 1) {
+        fillQuestionCard(emptyCard, questions[0])
+    } else {
+        const existingCards = document.querySelectorAll(".question-card");
+        questionCount = existingCards.length;
 
-    const existingCards = document.querySelectorAll(".question-card");
-    questionCount = existingCards.length;
-
-
-    questions.forEach(q => {
-        addQuestionFromMarkdown(q);
-    });
+        questions.forEach(q => {
+            addQuestionFromMarkdown(q);
+        });
+    }
 
     hideMarkdown();
 }
-
+window.renderQuestions = renderQuestions;
 
 
 function parseMarkdown(text) {
@@ -202,7 +243,7 @@ function addQuestion() {
 
     document.getElementById("questionsContainer").appendChild(newQuestion);
 }
-
+window.addQuestion = addQuestion;
 
 function deleteQuestion(btn) {
     Swal.fire({
@@ -228,7 +269,7 @@ function deleteQuestion(btn) {
         }
     });
 }
-
+window.deleteQuestion = deleteQuestion;
 
 function renumberQuestions() {
     const cards = document.querySelectorAll(".question-card");
@@ -393,10 +434,10 @@ function updateQuiz() {
     });
 
 }
-
+window.updateQuiz = updateQuiz;
 
 document.addEventListener("DOMContentLoaded", () => {
-    const user = getCurrentUser();
-    document.getElementById("welcomeUser").textContent = `Welcome, ${user.name}`;
+    // const user = getCurrentUser();
+    // document.getElementById("welcomeUser").textContent = `Welcome, ${user.name}`;
     loadQuiz();
 });

@@ -1,3 +1,10 @@
+import {logoutUser, getUserInitials, generateRandomColor, initProfile, calculateTotalTime, highlightCurrentPage } from './utality.js';
+window.logoutUser = logoutUser;
+getUserInitials();
+generateRandomColor();
+initProfile();
+highlightCurrentPage();
+
 function getCurrentUser() {
     return JSON.parse(localStorage.getItem("loggedInUser")) || { name: "Unknown User" };
 }
@@ -10,24 +17,6 @@ function saveQuizzes(quizzes) {
     localStorage.setItem("quizzes", JSON.stringify(quizzes));
 }
 
-function logoutUser() {
-    localStorage.removeItem("loggedInUser");
-    window.location.href = "login.html";
-}
-
-function editQuiz(id) {
-    const quizzes = getQuizzes();
-    const quiz = quizzes.find(q => q.id === id);
-    const currentUser = getCurrentUser();
-
-    if (quiz.creator === currentUser.name) {
-        localStorage.setItem("editingQuizId", id);
-        window.location.href = "edit-quiz.html";
-    } else {
-        alert("You can only edit quizzes created by you!");
-    }
-}
-
 // Render quizzes 
 function renderQuizzes() {
     const container = document.querySelector('.quizzes-container');
@@ -36,7 +25,7 @@ function renderQuizzes() {
     const quizzes = getQuizzes();
     const currentUser = getCurrentUser();
 
-    const myQuizzes = quizzes.filter(quiz => quiz.creator === currentUser.name);
+    const myQuizzes = quizzes.filter(quiz => quiz.creatorId === currentUser.id);
 
     if (myQuizzes.length === 0) {
         quizzesList.innerHTML = "";
@@ -55,7 +44,7 @@ function renderQuizzes() {
         const allQuizzes = getQuizzes();
         const actualIndex = allQuizzes.findIndex(q => q.id === quiz.id);
         console.log("actualIndex", actualIndex);
-        
+
 
         return `
         <div class="col-md-6 mb-2">
@@ -124,45 +113,12 @@ function countValidQuestions(questions) {
 }
 
 
-function calculateTotalTime(questions) {
-    if (!questions || questions.length === 0) {
-        return "0 sec";
-    }
-    
-    let totalSeconds = 0;
-    let questionCount = 0;
-
-    questions.forEach((question) => {
-        if (question.text && question.text.trim() !== "") {
-            const time = parseInt(question.timeLimit);
-            totalSeconds += (!isNaN(time) && time > 0) ? time : 60;
-            questionCount++;
-        }
-    });
-
-    if (questionCount === 0) {
-        return "0 sec";
-    }
-
-    if (totalSeconds < 60) {
-        return `${totalSeconds} sec`;
-    } else {
-        const minutes = Math.floor(totalSeconds / 60);
-        const seconds = totalSeconds % 60;
-        if (seconds === 0) {
-            return `${minutes} min`;
-        } else {
-            return `${minutes} min ${seconds} sec`;
-        }
-    }
-}
-
 // View quiz and attempts
 function viewQuizAttempts(quizId) {
     localStorage.setItem("selectedQuizId", quizId);
     window.location.href = "user-quiz-attempts.html";
 }
-
+window.viewQuizAttempts = viewQuizAttempts;
 
 function togglePublish(quizId) {
     const quizzes = getQuizzes();
@@ -224,7 +180,7 @@ function togglePublish(quizId) {
         }
     }
 }
-
+window.togglePublish = togglePublish;
 
 
 function deleteQuiz(quizId) {
@@ -261,7 +217,7 @@ function deleteQuiz(quizId) {
         }
     });
 }
-
+window.deleteQuiz = deleteQuiz;
 
 // Delete all attempts
 function deleteQuizAttempts(quizId) {
@@ -270,8 +226,24 @@ function deleteQuizAttempts(quizId) {
     localStorage.setItem("quizAttempts", JSON.stringify(attempts));
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+function editQuiz(id) {
+    const quizzes = getQuizzes();
+    const quiz = quizzes.find(q => q.id === id);
     const currentUser = getCurrentUser();
-    document.getElementById("welcomeUser").textContent = `Welcome, ${currentUser.name}`;
+
+  if (quiz.creatorId === currentUser.id) {
+        localStorage.setItem("editingQuizId", id);
+        window.location.href = "edit-quiz.html";
+    } else {
+        Swal.fire({
+            icon: "error",
+            title: "Access Denied",
+            text: "You can only edit quizzes created by you!"
+        });
+    }
+}
+window.editQuiz = editQuiz;
+
+document.addEventListener("DOMContentLoaded", function () {
     renderQuizzes();
 });
