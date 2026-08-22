@@ -185,6 +185,38 @@ body {
     margin-right: 8px;
 }
 
+@media (max-width: 575.98px) {
+    .profile-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .profile-title {
+        font-size: 1.6rem;
+    }
+
+    .profile-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .profile-card {
+        padding: 1rem;
+    }
+
+    .section-heading {
+        font-size: 1.15rem;
+    }
+
+    .interests-container {
+        padding: 0.5rem;
+    }
+
+    .interest-option {
+        max-width: 100%;
+        margin: 0.25rem;
+        padding: 0.6rem 0.75rem;
+    }
+}
+
 @media (max-width: 768px) {
     .profile-page {
         padding: 0 10px;

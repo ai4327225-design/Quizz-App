@@ -176,3 +176,28 @@ body {
         justify-content: center;
     }
 }
+
+@media (max-width: 575.98px) {
+    .page-header {
+        margin-bottom: 1.25rem;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+    }
+
+    .quiz-card {
+        padding: 1rem;
+        min-height: 0;
+    }
+
+    .quiz-meta {
+        flex-wrap: wrap;
+        gap: 0.6rem;
+    }
+
+    .quiz-actions > * {
+        flex: 1 1 100%;
+        justify-content: center;
+    }
+}

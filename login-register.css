@@ -145,3 +145,25 @@ input::placeholder{
     margin-top: -10px;
     margin-bottom: 10px;
 }
+
+@media (max-width: 575.98px) {
+    .auth-container {
+        min-height: 100vh;
+        height: auto;
+        padding: 1rem;
+    }
+
+    .auth-box {
+        padding: 1.5rem 1rem;
+        border-radius: 12px;
+    }
+
+    .app-title {
+        font-size: 2rem;
+    }
+
+    .form-title {
+        font-size: 1.4rem;
+        margin-bottom: 1.5rem;
+    }
+}

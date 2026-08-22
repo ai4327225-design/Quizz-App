@@ -273,3 +273,58 @@ hr {
 .btn-render:hover {
     background-color: #3f37c9;
 }
+
+@media (max-width: 767.98px) {
+    .container,
+    .container-fluid,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl,
+    .container-xxl {
+        width: 100%;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .quiz-form-container,
+    .questions-section,
+    .markdown-section {
+        padding: 1rem;
+    }
+
+    .section-header,
+    .form-actions,
+    .markdown-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .questions-section-button {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .btn-add-question,
+    .btn-cancel,
+    .btn-create,
+    .btn-markdown-cencle,
+    .btn-render {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .question-card {
+        padding: 1rem;
+    }
+
+    .option-item {
+        align-items: stretch;
+        flex-wrap: wrap;
+    }
+
+    .option-input {
+        min-width: 0;
+        width: 100%;
+    }
+}

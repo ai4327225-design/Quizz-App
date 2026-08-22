@@ -17,8 +17,6 @@ function getQuizzes() {
     return JSON.parse(localStorage.getItem("quizzes")) || [];
 }
 
-quizlist = getQuizzes();
-
 let currentQuiz = null;
 let allAttempts = [];
 let currentUser = null;

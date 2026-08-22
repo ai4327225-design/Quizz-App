@@ -1,9 +1,3 @@
-// import { getCurrentUser, getQuizzes, getQuizAttempts, logoutUser, getUserInitials, generateRandomColor, initProfile, calculateTotalTime, highlightCurrentPage } from './utality.js';
-// window.logoutUser = logoutUser;
-// getUserInitials();
-// generateRandomColor();
-// highlightCurrentPage();
-
 import { logoutUser, getUserInitials, generateRandomColor, initProfile, calculateTotalTime, highlightCurrentPage } from './utality.js';
 window.logoutUser = logoutUser;
 getUserInitials();

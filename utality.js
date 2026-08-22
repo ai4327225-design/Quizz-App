@@ -1,22 +1,6 @@
-// export function getCurrentUser() {
-//     return JSON.parse(localStorage.getItem("loggedInUser")) || { name: "Unknown User" };
-// }
-
-// export function getQuizzes() {
-//     return JSON.parse(localStorage.getItem("quizzes")) || [];
-// }
-
-// export function saveQuizzes(quizzes) {
-//     localStorage.setItem("quizzes", JSON.stringify(quizzes));
-// }
-
-// export function getQuizAttempts() {
-//     return JSON.parse(localStorage.getItem("quizAttempts")) || [];
-// }
-
 export function logoutUser() {
     localStorage.removeItem("loggedInUser");
-    window.location.href = "login.html"
+    window.location.href = "index.html"
 }
 
 export function getUserInitials(name) {

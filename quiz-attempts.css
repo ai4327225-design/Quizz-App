@@ -219,6 +219,31 @@ body {
     color: white;
 }
 
+@media (max-width: 767.98px) {
+    .attempt-card {
+        padding: 1rem;
+        min-height: 0;
+    }
+
+    .attempt-header {
+        gap: 1rem;
+    }
+
+    .attempt-details {
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .attempt-actions {
+        flex-wrap: wrap;
+    }
+
+    .attempt-actions > * {
+        flex: 1 1 100%;
+        justify-content: center;
+    }
+}
+
 .btn-retake-quiz {
     background-color: #4361ee;
     color: white;

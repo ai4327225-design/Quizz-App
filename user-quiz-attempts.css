@@ -154,6 +154,43 @@ body {
     color: #212529;
 }
 
+@media (max-width: 575.98px) {
+    .attempt-title {
+        font-size: 1.1rem;
+        overflow-wrap: anywhere;
+    }
+
+    .score-circle {
+        width: 52px;
+        height: 52px;
+    }
+
+    .attempt-details {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .quiz-title,
+    .attempts-detail {
+        padding-top: 1.25rem;
+    }
+
+    .attempt-card-right {
+        padding: 1rem;
+    }
+
+    .attempt-header,
+    .attempt-details {
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .attempt-details {
+        justify-content: space-between;
+    }
+}
+
 
 
 

@@ -369,3 +369,32 @@ body {
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+@media (max-width: 575.98px) {
+    .quiz-header,
+    .question-container {
+        padding: 1rem;
+    }
+
+    .quiz-title {
+        font-size: 1.35rem;
+        overflow-wrap: anywhere;
+    }
+
+    .quiz-meta {
+        flex-wrap: wrap;
+    }
+
+    .question-text {
+        font-size: 1.05rem;
+        overflow-wrap: anywhere;
+    }
+
+    .option-item {
+        padding: 0.85rem 1rem;
+    }
+
+    .navigation-buttons {
+        gap: 0.75rem;
+    }
+}
